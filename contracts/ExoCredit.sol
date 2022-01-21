@@ -10,7 +10,6 @@ contract ExoCredit is ERC20, ERC20Burnable, AccessControl {
 
     constructor() ERC20("ExoCredit", "EXO") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        mint(msg.sender, 1000000 * 1e18);
     }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
