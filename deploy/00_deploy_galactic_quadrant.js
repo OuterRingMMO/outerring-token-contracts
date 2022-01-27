@@ -3,17 +3,18 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
     
-    const stakeToken = await deploy('ResourceToken', {
+    const resourceToken = await deploy('GalacticQuadrant', {
         from: deployer,
         args: [],
         log: true,
+        proxy: true
     });
 
-    console.log('Resource Token deployed at: ', stakeToken.address);
+    console.log('Resource Token deployed at: ', resourceToken.address);
 
     // Verification block
     await run("verify:verify", {
-         address: stakeToken.address,
+         address: resourceToken.address,
          contract: "contracts/tokens/ResourceToken.sol:ResourceToken"
     });
 };
