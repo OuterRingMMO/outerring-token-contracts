@@ -3,7 +3,6 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 
-
 contract LGEWhitelisted is Context {
     struct WhitelistRound {
         uint256 duration;

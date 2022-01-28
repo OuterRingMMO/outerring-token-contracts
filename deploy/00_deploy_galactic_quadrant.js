@@ -2,21 +2,22 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
-    
-    const resourceToken = await deploy('GalacticQuadrant', {
+
+    const gqToken = await deploy('GalacticQuadrant', {
         from: deployer,
         args: [],
         log: true,
         proxy: true
     });
 
-    console.log('Resource Token deployed at: ', resourceToken.address);
+    console.log('GQ Token deployed at: ', gqToken.address);
 
-    // Verification block
+    const GQImplementation = await hre.deployments.get('GalacticQuadrant_Implementation');
+    const GQImplementationDeployed = await ethers.getContractAt('GalacticQuadrant', GQImplementation.address);
     await run("verify:verify", {
-         address: resourceToken.address,
-         contract: "contracts/tokens/ResourceToken.sol:ResourceToken"
+        address: GQImplementationDeployed.address,
+        contract: "contracts/GalacticQuadrant.sol:GalacticQuadrant"
     });
 };
 
-module.exports.tags = ['ResourceToken'];
+module.exports.tags = ['GalacticQuadrant'];
