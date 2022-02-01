@@ -6,18 +6,17 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const gqToken = await deploy('GalacticQuadrant', {
         from: deployer,
         args: [],
-        log: true,
-        proxy: true
+        log: true
     });
 
     console.log('GQ Token deployed at: ', gqToken.address);
-
-    const GQImplementation = await hre.deployments.get('GalacticQuadrant_Implementation');
-    const GQImplementationDeployed = await ethers.getContractAt('GalacticQuadrant', GQImplementation.address);
+/*
+    const GQ = await hre.deployments.get('GalacticQuadrant');
+    const GQDeployed = await ethers.getContractAt('GalacticQuadrant', GQ.address);
     await run("verify:verify", {
-        address: GQImplementationDeployed.address,
+        address: GQDeployed.address,
         contract: "contracts/GalacticQuadrant.sol:GalacticQuadrant"
-    });
+    });*/
 };
 
 module.exports.tags = ['GalacticQuadrant'];
