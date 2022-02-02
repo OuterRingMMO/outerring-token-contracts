@@ -6,13 +6,17 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20Burnable
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract ExoCredit is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, AccessControlUpgradeable {
+contract ExoCredit is
+    Initializable,
+    ERC20Upgradeable,
+    ERC20BurnableUpgradeable,
+    AccessControlUpgradeable
+{
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() initializer {}
 
-    function initialize() initializer public {
+    function initialize() public initializer {
         __ERC20_init("ExoCredit", "EXO");
         __ERC20Burnable_init();
         __AccessControl_init();
