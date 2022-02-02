@@ -17,7 +17,7 @@ contract ExoCredit is
     constructor() initializer {}
 
     function initialize() public initializer {
-        __ERC20_init("ExoCredit", "EXO");
+        __ERC20_init("Exocredit", "EXO");
         __ERC20Burnable_init();
         __AccessControl_init();
 
