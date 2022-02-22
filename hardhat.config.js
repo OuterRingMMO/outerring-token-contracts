@@ -3,7 +3,6 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-ethers");
 require("hardhat-deploy");
-require("hardhat-deploy-ethers");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -42,6 +41,15 @@ module.exports = {
           },
         },
       },
+      {
+        version: "0.5.9",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
     ],
   },
   namedAccounts: {
@@ -54,22 +62,28 @@ module.exports = {
     ropsten: {
       url: `https://ropsten.infura.io/v3/${process.env.INFURA_PROJECT_KEY}`,
       chainId: 3,
-      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`]
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
     },
     rinkeby: {
       url: `https://speedy-nodes-nyc.moralis.io/c58b6e26734d635d56e1be97/eth/rinkeby`,
       chainId: 4,
-      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`]
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
     },
     bscTestnet: {
       url: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
       chainId: 97,
-      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`]
+      gas: 2100000,
+      gasPrice: 12000000000,
+      accounts: [
+        `0x${process.env.DEPLOYER_PRIVATE_KEY1}`,
+        `0x${process.env.DEPLOYER_PRIVATE_KEY2}`,
+        `0x${process.env.DEPLOYER_PRIVATE_KEY3}`
+      ]
     },
     mumbai: {
       url: `https://rpc-mumbai.maticvigil.com`,
       chainId: 80001,
-      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`]
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
     }
   },
   etherscan: {
