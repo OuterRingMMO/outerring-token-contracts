@@ -56,6 +56,11 @@ module.exports = {
       chainId: 3,
       accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`]
     },
+    rinkeby: {
+      url: `https://speedy-nodes-nyc.moralis.io/c58b6e26734d635d56e1be97/eth/rinkeby`,
+      chainId: 4,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY}`]
+    },
     bscTestnet: {
       url: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
       chainId: 97,
@@ -70,6 +75,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       ropsten: process.env.ETHERSCAN_API_KEY,
+      rinkeby: process.env.ETHERSCAN_API_KEY,
       bscTestnet: process.env.BSCSCAN_API_KEY,
       polygonMumbai: process.env.POLYGONSCAN_API_KEY
     }
