@@ -62,9 +62,9 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
     );
     event Burned(address indexed burner, uint256 burnAmount);
 
-    constructor() BEP20TokenWhitelisted("Galactic Quadrant", "GQ") {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+    constructor(address multiSigWalletAddress) BEP20TokenWhitelisted("Galactic Quadrant", "GQ") {
+        _grantRole(DEFAULT_ADMIN_ROLE, multiSigWalletAddress);
+        _grantRole(MINTER_ROLE, multiSigWalletAddress);
         _cap = 10000000000 * 10**decimals();
         _mint(msg.sender, 1000000 * 10**decimals());
     }
