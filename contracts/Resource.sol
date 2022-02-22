@@ -16,7 +16,7 @@ contract Resource is
 
     constructor() initializer {}
 
-    function initialize(string memory name, string memory symbol)
+    function initialize(string memory name, string memory symbol, address multiSigWalletAddress)
         public
         initializer
     {
@@ -24,8 +24,8 @@ contract Resource is
         __ERC20Burnable_init();
         __AccessControl_init();
 
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, multiSigWalletAddress);
+        _grantRole(MINTER_ROLE, multiSigWalletAddress);
     }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
