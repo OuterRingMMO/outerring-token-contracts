@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract ExoCredit is
+contract Exocredit is
     Initializable,
     ERC20Upgradeable,
     ERC20BurnableUpgradeable,
@@ -16,13 +16,13 @@ contract ExoCredit is
 
     constructor() initializer {}
 
-    function initialize() public initializer {
+    function initialize(address multiSigWalletAddress) public initializer {
         __ERC20_init("Exocredit", "EXO");
         __ERC20Burnable_init();
         __AccessControl_init();
 
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+        _grantRole(DEFAULT_ADMIN_ROLE, multiSigWalletAddress);
+        _grantRole(MINTER_ROLE, multiSigWalletAddress);
     }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {

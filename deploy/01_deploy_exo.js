@@ -3,7 +3,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
 
-    const exoToken = await deploy('ExoCredit', {
+    const exoToken = await deploy('Exocredit', {
         from: deployer,
         args: [],
         log: true,
@@ -14,11 +14,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     console.log('EXO Token deployed at: ', exoToken.address);
 
-    const exoImplementation = await hre.deployments.get('ExoCredit_Implementation');
-    const ExoDeployed = await ethers.getContractAt('ExoCredit', exoImplementation.address);
+    const exoImplementation = await hre.deployments.get('Exocredit_Implementation');
+    const ExoDeployed = await ethers.getContractAt('Exocredit', exoImplementation.address);
     await run("verify:verify", {
         address: ExoDeployed.address,
-        contract: "contracts/ExoCredit.sol:ExoCredit"
+        contract: "contracts/Exocredit.sol:Exocredit"
     });
 };
 
