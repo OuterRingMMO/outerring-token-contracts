@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
@@ -11,7 +11,7 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    uint256 immutable private _cap;
+    uint256 private immutable _cap;
 
     /// @dev A record of each accounts delegate
     mapping(address => address) internal _delegates;
@@ -29,14 +29,14 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
     mapping(address => uint32) public numCheckpoints;
 
     /// @notice The EIP-712 typehash for the contract's domain
-    bytes32 public constant DOMAIN_TYPEHASH = keccak256(
-        "EIP712Domain(string name,uint256 chainId,address verifyingContract)"
-    );
+    bytes32 public constant DOMAIN_TYPEHASH =
+        keccak256(
+            "EIP712Domain(string name,uint256 chainId,address verifyingContract)"
+        );
 
     /// @notice The EIP-712 typehash for the delegation struct used by the contract
-    bytes32 public constant DELEGATION_TYPEHASH = keccak256(
-        "Delegation(address delegatee,uint256 nonce,uint256 expiry)"
-    );
+    bytes32 public constant DELEGATION_TYPEHASH =
+        keccak256("Delegation(address delegatee,uint256 nonce,uint256 expiry)");
 
     /// @notice A record of states for signing / validating signatures
     mapping(address => uint256) public nonces;
@@ -65,26 +65,47 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
     constructor() BEP20TokenWhitelisted("Galactic Quadrant", "GQ") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
-        _cap = 10000000000 * 10 ** decimals();
-        _mint(msg.sender, 1000000 * 10 ** decimals());
+        _cap = 10000000000 * 10**decimals();
+        _mint(msg.sender, 1000000 * 10**decimals());
     }
 
     /**
-    * @dev Returns the max cap of the token
-    */
+     * @dev Returns the max cap of the token
+     */
     function cap() public view returns (uint256) {
         return _cap;
     }
 
-    function mint(address _to, uint256 _amount) public onlyRole(MINTER_ROLE) {
-        require(totalSupply() + _amount <= _cap, "BEP20Capped: Cap exceeded");
-        _mint(_to, _amount);
-        emit Minted(msg.sender, _to, _amount);
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+        require(totalSupply() + amount <= _cap, "BEP20Capped: Cap exceeded");
+        _mint(to, amount);
+        emit Minted(msg.sender, to, amount);
     }
 
-    function burn(uint256 _amount) public {
-        _burn(msg.sender, _amount);
-        emit Burned(msg.sender, _amount);
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
+        _moveDelegates(_delegates[_msgSender()], address(0), amount);
+        emit Burned(msg.sender, amount);
+    }
+
+    function transfer(address recipient, uint256 amount)
+        public
+        override
+        returns (bool)
+    {
+        super.transfer(recipient, amount);
+        _moveDelegates(_delegates[_msgSender()], _delegates[recipient], amount);
+        return true;
+    }
+
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) public override returns (bool) {
+        super.transferFrom(sender, recipient, amount);
+        _moveDelegates(_delegates[sender], _delegates[recipient], amount);
+        return true;
     }
 
     /**
@@ -138,7 +159,10 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
             nonce == nonces[signatory]++,
             "GQ::delegateBySig: invalid nonce"
         );
-        require(block.timestamp <= expiry, "GQ::delegateBySig: signature expired");
+        require(
+            block.timestamp <= expiry,
+            "GQ::delegateBySig: signature expired"
+        );
         return _delegate(signatory, delegatee);
     }
 
@@ -211,7 +235,7 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
 
     function _delegate(address delegator, address delegatee) internal {
         address currentDelegate = _delegates[delegator];
-        uint256 delegatorBalance = balanceOf(delegator); 
+        uint256 delegatorBalance = balanceOf(delegator);
         _delegates[delegator] = delegatee;
 
         emit DelegateChanged(delegator, currentDelegate, delegatee);
@@ -277,13 +301,5 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
             chainId := chainid()
         }
         return chainId;
-    }
-
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal virtual override {
-        _moveDelegates(_delegates[from], _delegates[to], amount);
     }
 }
