@@ -23,4 +23,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     });
 };
 
-module.exports.tags = ['MultiSigWalletWithTimeLock'];
+module.exports.tags = ['MultiSig'];
