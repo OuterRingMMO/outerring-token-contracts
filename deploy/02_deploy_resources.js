@@ -1,3 +1,5 @@
+const resources = require('../json/resources.json');
+
 module.exports = async ({ getNamedAccounts, deployments }) => {
 
     const { deploy } = deployments;
@@ -5,7 +7,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     const resourceToken = await deploy('Resource', {
         from: deployer,
-        args: ['RecursoX', 'RECX'],
+        args: [],
         log: true,
         proxy: {
             proxyContract: 'OpenZeppelinTransparentProxy',

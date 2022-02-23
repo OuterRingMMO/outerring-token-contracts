@@ -21,17 +21,18 @@ async function main() {
     const MultiSig = await hre.deployments.get('MultiSigWalletWithTimeLock');
     const multiSig = await ethers.getContractAt('MultiSigWalletWithTimeLock', MultiSig.address);
 
-    console.log(owners[1].address);
-    const newMinterAddress = owners[2].address;
+    const newMinterAddress = '0x7A65b7052d9e595AF9A3A60D0eE378Ab871914e4';
+    const transactions = await multiSig.transactionCount();
+
     const payload = exo.interface.encodeFunctionData("grantRole", [MINTER_ROLE, newMinterAddress]);
     const ether = parseEther("0.0")
     let tx = await multiSig.submitTransaction(exo.address, ether, payload);
     console.log(tx);
     sleep(5000);
-    tx = await multiSig.connect(owners[1]).confirmTransaction(5)
+    tx = await multiSig.connect(owners[1]).confirmTransaction(transactions.toString())
     console.log(tx);
     sleep(10000);
-    tx = await multiSig.executeTransaction(5);
+    tx = await multiSig.executeTransaction(transactions.toString());
     console.log(tx);
 }
 
