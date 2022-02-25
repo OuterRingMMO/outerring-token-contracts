@@ -1,13 +1,17 @@
-const resources = require('../json/resources.json');
+import { ethers } from "hardhat";
+import { DeployFunction } from "hardhat-deploy/types";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-module.exports = async ({ getNamedAccounts, deployments }) => {
-
-    const { deploy } = deployments;
+const deploy: DeployFunction = async function (
+    hre: HardhatRuntimeEnvironment,
+) {
+    const { deployments, getNamedAccounts } = hre;
     const { deployer } = await getNamedAccounts();
+    const { deploy } = deployments;
 
     const resourceToken = await deploy('Resource', {
         from: deployer,
-        args: [],
+        args: ['Space Corsair Key', 'SCK'],
         log: true,
         proxy: {
             proxyContract: 'OpenZeppelinTransparentProxy',
@@ -18,10 +22,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     const resourceImplementation = await hre.deployments.get('Resource_Implementation');
     const resourceDeployed = await ethers.getContractAt('Resource', resourceImplementation.address);
-    await run("verify:verify", {
+    await hre.run("verify:verify", {
         address: resourceDeployed.address,
         contract: "contracts/Resource.sol:Resource"
     });
+
 };
 
-module.exports.tags = ['Resource'];
+deploy.tags = ['SCK']
+export default deploy;

@@ -1,4 +1,4 @@
-import { run, ethers } from "hardhat";
+const hre = require("hardhat");
 
 async function main() {
 
@@ -6,11 +6,8 @@ async function main() {
     
     const Exo = await hre.deployments.get('Exocredit');
     const exo = await ethers.getContractAt('Exocredit', Exo.address);
-
-    const MultiSig = await hre.deployments.get('MultiSigWalletWithTimeLock');
-    const multiSig = await ethers.getContractAt('MultiSigWalletWithTimeLock', MultiSig.address);
     
-    await exo.initialize(multiSig.address);
+    await exo.initialize('0x4Afb351144FB1672e5bd611F5baA889429970Ff5');
     
 }
 
