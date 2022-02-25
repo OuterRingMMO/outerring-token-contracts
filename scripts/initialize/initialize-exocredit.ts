@@ -1,22 +1,18 @@
-import { run, ethers } from "hardhat";
+import { ethers } from "hardhat";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-async function main() {
+async function main(hre: HardhatRuntimeEnvironment): Promise<void> {
 
-    owner = await ethers.getSigner();
-    
     const Exo = await hre.deployments.get('Exocredit');
     const exo = await ethers.getContractAt('Exocredit', Exo.address);
-
-    const MultiSig = await hre.deployments.get('MultiSigWalletWithTimeLock');
-    const multiSig = await ethers.getContractAt('MultiSigWalletWithTimeLock', MultiSig.address);
     
-    await exo.initialize(multiSig.address);
+    await exo.initialize('0x3fE68df7D838e66DAA2Ffff4d0e77F6C83079AE3');
     
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main()
+main(hre)
     .then(() => process.exit(0))
     .catch((error) => {
         console.error(error);
