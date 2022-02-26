@@ -4,13 +4,12 @@ async function main() {
 
     owner = await ethers.getSigner();
 
-    const MultiSig = await hre.deployments.get('MultiSigWalletWithTimeLock');
-    const multiSig = await ethers.getContractAt('MultiSigWalletWithTimeLock', MultiSig.address);
-
-    let Resource = await hre.deployments.get('SCK');
+    let Resource = await hre.deployments.get('Resource');
     let resource = await ethers.getContractAt('Resource', Resource.address);
+    const multiSigAddress = '0x29e05FADE91a33A413e39D980D86F253123C5fa7';
+    const tx = await resource.initialize('Space Corsair Key', 'SCK', multiSigAddress);
+    console.log(tx);
 
-    await resource.initialize('Space Corsair Key', 'SCK', multiSig.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

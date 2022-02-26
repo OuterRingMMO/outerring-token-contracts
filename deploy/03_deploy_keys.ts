@@ -11,7 +11,7 @@ const deploy: DeployFunction = async function (
 
     const resourceToken = await deploy('Resource', {
         from: deployer,
-        args: ['Space Corsair Key', 'SCK'],
+        args: [],
         log: true,
         proxy: {
             proxyContract: 'OpenZeppelinTransparentProxy',

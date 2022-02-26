@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-async function main(hre: HardhatRuntimeEnvironment): Promise<void> {
-
+async function main(): Promise<void> {
+    
     const Exo = await hre.deployments.get('Exocredit');
     const exo = await ethers.getContractAt('Exocredit', Exo.address);
     
@@ -12,7 +12,8 @@ async function main(hre: HardhatRuntimeEnvironment): Promise<void> {
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
-main(hre)
+
+main()
     .then(() => process.exit(0))
     .catch((error) => {
         console.error(error);
