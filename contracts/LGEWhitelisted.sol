@@ -85,9 +85,7 @@ contract LGEWhitelisted is Context {
     function modifyLGEWhitelist(
         uint256 index,
         uint256 duration,
-        uint256 amountMax,
-        address[] calldata addresses,
-        bool enabled
+        uint256 amountMax
     ) external onlyWhitelister() {
         require(index < _lgeWhitelistRounds.length, "Invalid index");
         require(amountMax > 0, "Invalid amountMax");
@@ -96,9 +94,6 @@ contract LGEWhitelisted is Context {
 
         if (amountMax != _lgeWhitelistRounds[index].amountMax) _lgeWhitelistRounds[index].amountMax = amountMax;
 
-        for (uint256 i = 0; i < addresses.length; i++) {
-            _lgeWhitelistRounds[index].addresses[addresses[i]] = enabled;
-        }
     }
 
     /*
@@ -120,7 +115,9 @@ contract LGEWhitelisted is Context {
         view
         returns (
             uint256,
-            bool,
+            uint256,
+            uint256,
+            uint256,
             uint256
         )
     {
@@ -137,13 +134,12 @@ contract LGEWhitelisted is Context {
                         wlRound.duration,
                         wlCloseTimestampLast,
                         wlRound.amountMax,
-                        wlRound.addresses[_msgSender()],
                         wlRound.purchased[_msgSender()]
                     );
             }
         }
 
-        return (0, 0, 0, 0, false, 0);
+        return (0, 0, 0, 0, 0);
     }
 
     /*
@@ -164,7 +160,7 @@ contract LGEWhitelisted is Context {
         if (sender == _lgePairAddress && recipient != _lgePairAddress) {
             //buying
 
-            (uint256 wlRoundNumber, , , , , ) = getLGEWhitelistRound();
+            (uint256 wlRoundNumber, , , , ) = getLGEWhitelistRound();
 
             if (wlRoundNumber > 0) {
                 WhitelistRound storage wlRound = _lgeWhitelistRounds[wlRoundNumber - 1];
