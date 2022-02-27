@@ -120,9 +120,6 @@ contract LGEWhitelisted is Context {
         view
         returns (
             uint256,
-            uint256,
-            uint256,
-            uint256,
             bool,
             uint256
         )
@@ -171,8 +168,6 @@ contract LGEWhitelisted is Context {
 
             if (wlRoundNumber > 0) {
                 WhitelistRound storage wlRound = _lgeWhitelistRounds[wlRoundNumber - 1];
-
-                require(wlRound.addresses[recipient], "LGE - Buyer is not whitelisted");
 
                 uint256 amountRemaining = 0;
 
