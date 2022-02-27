@@ -170,7 +170,7 @@ contract LGEWhitelisted is Context {
                 if (wlRound.purchased[recipient] < wlRound.amountMax)
                     amountRemaining = wlRound.amountMax - wlRound.purchased[recipient];
 
-                require(amount <= amountRemaining, "LGE - Amount exceeds whitelist maximum");
+                require(amount <= amountRemaining, "LGE - Amount exceeds maximum amount");
                 wlRound.purchased[recipient] = wlRound.purchased[recipient] + amount;
             }
         }
