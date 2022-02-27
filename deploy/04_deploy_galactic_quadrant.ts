@@ -8,13 +8,12 @@ const deploy: DeployFunction = async function (
     const { deployments, getNamedAccounts } = hre;
     const { deployer } = await getNamedAccounts();
     const { deploy } = deployments;
-
-    const MultiSig = await hre.deployments.get('MultiSigWalletWithTimeLock');
-    const multiSig = await ethers.getContractAt('MultiSigWalletWithTimeLock', MultiSig.address);
     
+    //const multiSigAddress = '0x2aBcbdF5a10082F311D666EC58aD1C90948a2F4a';
+
     const gqToken = await deploy('GalacticQuadrant', {
         from: deployer,
-        args: [multiSig.address],
+        args: [multiSigAddress],
         log: true
     });
 
@@ -25,7 +24,7 @@ const deploy: DeployFunction = async function (
     await hre.run("verify:verify", {
         address: GQDeployed.address,
         contract: "contracts/GalacticQuadrant.sol:GalacticQuadrant",
-        constructorArguments: [multiSig.address]
+        constructorArguments: [multiSigAddress]
     });
 
 };
