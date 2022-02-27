@@ -74,7 +74,7 @@ contract LGEWhitelisted is Context {
     }
 
     /*
-     * modifyLGEWhitelistAddresses - Define what addresses are included/excluded from a whitelist round
+     * modifyLGEWhitelistAddresses - modify the data for the round
      *
      * index - 0-based index of round to modify whitelist
      * duration - period in seconds from LGE event or previous whitelist round
@@ -105,8 +105,7 @@ contract LGEWhitelisted is Context {
      *  2. duration, in seconds, current whitelist round is active for
      *  3. timestamp current whitelist round closes at
      *  4. maximum amount a whitelister can purchase in this round
-     *  5. is caller whitelisted
-     *  6. how much caller has purchased in current whitelist round
+     *  5. how much caller has purchased in current whitelist round
      *
      */
 
