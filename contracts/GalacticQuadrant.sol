@@ -66,7 +66,7 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
         _grantRole(DEFAULT_ADMIN_ROLE, multiSigWalletAddress);
         _grantRole(MINTER_ROLE, multiSigWalletAddress);
         _cap = 10000000000 * 10**decimals();
-        _mint(msg.sender, 1000000 * 10**decimals());
+        _mint(msg.sender, 1000000000 * 10**decimals());
     }
 
     /**

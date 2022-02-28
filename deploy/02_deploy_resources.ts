@@ -2,6 +2,10 @@ import { ethers } from "hardhat";
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
 const deploy: DeployFunction = async function (
     hre: HardhatRuntimeEnvironment,
 ) {
@@ -20,6 +24,8 @@ const deploy: DeployFunction = async function (
 
     console.log('Resource Token  deployed at: ', resourceToken.address);
 
+    delay(5000);
+    
     const resourceImplementation = await hre.deployments.get('Resource_Implementation');
     const resourceDeployed = await ethers.getContractAt('Resource', resourceImplementation.address);
     await hre.run("verify:verify", {

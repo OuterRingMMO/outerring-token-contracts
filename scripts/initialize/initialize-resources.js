@@ -1,5 +1,4 @@
 const hre = require("hardhat");
-const resources = require('../json/resources.json').resources;
 
 function sleep(ms) {
     return new Promise((resolve) => {
@@ -15,20 +14,17 @@ async function asyncForEach(array, callback) {
 
 async function main() {
 
-    const MultiSig = await hre.deployments.get('MultiSigWalletWithTimeLock');
-    const multiSig = await ethers.getContractAt('MultiSigWalletWithTimeLock', MultiSig.address);
+    const multiSig = '0x29e05FADE91a33A413e39D980D86F253123C5fa7';
+    const name = 'Argon';
+    const symbol = 'ARG';
 
     owner = await ethers.getSigner();
 
-    for await (let element of resources) {
-
-        let Resource = await hre.deployments.get(element.name);
-        let resource = await ethers.getContractAt('Resource', Resource.address);
-
-        await resource.initialize(element.name, element.symbol, multiSig.address);
-
-        sleep(5000);
-    }
+    let Resource = await hre.deployments.get('Resource');
+    let resource = await ethers.getContractAt('Resource', Resource.address);
+    
+    const tx = await resource.initialize(name, symbol, multiSig);
+    console.log(tx);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
