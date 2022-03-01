@@ -9,16 +9,16 @@ const deploy: DeployFunction = async function (
     const { deployer } = await getNamedAccounts();
     const { deploy } = deployments;
     
-    const multiSigAddress = deployer;
-
+    const multiSigAddress = '0x29e05FADE91a33A413e39D980D86F253123C5fa7';
+    /*
     const gqToken = await deploy('GalacticQuadrant', {
         from: deployer,
         args: [multiSigAddress],
         log: true
     });
-
     console.log('GQ Token deployed at: ', gqToken.address);
-
+    */
+    
     const GQ = await hre.deployments.get('GalacticQuadrant');
     const GQDeployed = await ethers.getContractAt('GalacticQuadrant', GQ.address);
     await hre.run("verify:verify", {
@@ -26,7 +26,6 @@ const deploy: DeployFunction = async function (
         contract: "contracts/GalacticQuadrant.sol:GalacticQuadrant",
         constructorArguments: [multiSigAddress]
     });
-
 };
 
 deploy.tags = ['GQ']
