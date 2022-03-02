@@ -75,6 +75,8 @@ module.exports = {
     bscMainnet: {
       url: `https://bsc-dataseed1.ninicoin.io/`,
       chainId: 56,
+      gas: 2100000,
+      gasPrice: 8000000000,
       accounts: [
         `0x${process.env.DEPLOYER_PRIVATE_KEY1}`
       ]
