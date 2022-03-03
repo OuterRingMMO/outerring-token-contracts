@@ -7,7 +7,7 @@ async function main() {
     const Exo = await hre.deployments.get('Exocredit');
     const exo = await ethers.getContractAt('Exocredit', Exo.address);
     
-    const multiSig = '0x29e05FADE91a33A413e39D980D86F253123C5fa7'
+    const multiSig = ''
     const tx = await exo.initialize(multiSig);
     console.log(tx);
     

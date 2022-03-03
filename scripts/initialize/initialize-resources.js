@@ -14,7 +14,7 @@ async function asyncForEach(array, callback) {
 
 async function main() {
 
-    const multiSig = '0x29e05FADE91a33A413e39D980D86F253123C5fa7';
+    const multiSig = '';
     const name = 'Argon';
     const symbol = 'ARG';
 

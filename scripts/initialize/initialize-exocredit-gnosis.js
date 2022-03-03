@@ -7,7 +7,7 @@ async function main() {
     const Exo = await hre.deployments.get('Exocredit');
     const exo = await ethers.getContractAt('Exocredit', Exo.address);
     
-    await exo.initialize('0x4Afb351144FB1672e5bd611F5baA889429970Ff5');
+    await exo.initialize('');
     
 }
 

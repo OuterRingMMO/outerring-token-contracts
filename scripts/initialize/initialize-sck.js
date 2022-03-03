@@ -6,7 +6,7 @@ async function main() {
 
     let Resource = await hre.deployments.get('Resource');
     let resource = await ethers.getContractAt('Resource', Resource.address);
-    const multiSigAddress = '0x29e05FADE91a33A413e39D980D86F253123C5fa7';
+    const multiSigAddress = '';
     const tx = await resource.initialize('Space Corsair Key', 'SCK', multiSigAddress);
     console.log(tx);
 
