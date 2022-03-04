@@ -9,7 +9,7 @@ const deploy: DeployFunction = async function (
     const { deployer } = await getNamedAccounts();
     const { deploy } = deployments;
     
-    const multiSigAddress = '0x29e05FADE91a33A413e39D980D86F253123C5fa7';
+    const multiSigAddress = '0x2aBcbdF5a10082F311D666EC58aD1C90948a2F4a';
     /*
     const gqToken = await deploy('GalacticQuadrant', {
         from: deployer,
