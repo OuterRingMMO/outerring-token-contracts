@@ -14,9 +14,9 @@ async function asyncForEach(array, callback) {
 
 async function main() {
 
-    const multiSig = '';
-    const name = 'Argon';
-    const symbol = 'ARG';
+    const multiSig = '0xAA4cc2ce3A25E53547f2d996c91C6bad72725C4e';
+    const name = 'TokenProof';
+    const symbol = 'TOKP';
 
     owner = await ethers.getSigner();
 

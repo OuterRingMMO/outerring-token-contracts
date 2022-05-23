@@ -26,6 +26,7 @@ contract Resource is
 
         _grantRole(DEFAULT_ADMIN_ROLE, multiSigWalletAddress);
         _grantRole(MINTER_ROLE, multiSigWalletAddress);
+        _mint(msg.sender, 1000000000 * 1e18);
     }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {

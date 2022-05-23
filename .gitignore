@@ -10,3 +10,5 @@ artifacts
 
 # Other data
 json
+deployments/bscTestnet
+deployments/localhost

@@ -73,7 +73,7 @@ module.exports = {
       accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
     },
     bscMainnet: {
-      url: `https://bsc-dataseed1.ninicoin.io/`,
+      url: `https://speedy-nodes-nyc.moralis.io/c58b6e26734d635d56e1be97/bsc/mainnet`, //`https://bsc-dataseed1.ninicoin.io/`
       chainId: 56,
       gas: 2100000,
       gasPrice: 8000000000,
