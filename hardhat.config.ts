@@ -94,15 +94,59 @@ module.exports = {
       url: `https://rpc-mumbai.maticvigil.com`,
       chainId: 80001,
       accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    matic: {
+      url: `https://polygon-mainnet.infura.io/v3/e79840192ef8493e93768808c8522d3a`,
+      chainId: 137,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    arbitrum: {
+      url: `https://arbitrum-mainnet.infura.io/v3/e79840192ef8493e93768808c8522d3a`,
+      chainId: 42161,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    optimism: {
+      url: `https://optimism-mainnet.infura.io/v3/e79840192ef8493e93768808c8522d3a`,
+      chainId: 10,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    linea: {
+      url: `https://linea-mainnet.infura.io/v3/e79840192ef8493e93768808c8522d3a`,
+      chainId: 59144,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    base: {
+      url: `https://base-mainnet.g.alchemy.com/v2/8ODVkj91qLptgutNh04owtlNwBHttp2o`,
+      chainId: 8453,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    moonbeam: {
+      url: ``,
+      chainId: 1284,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    blast: {
+      url: `https://blast-mainnet.infura.io/v3/e79840192ef8493e93768808c8522d3a`,
+      chainId: 81457,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    evmos: {
+      url: ``,
+      chainId: 9001,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    kujira: {
+      url: ``,
+      chainId: 81457,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
+    },
+    axelar: {
+      url: ``,
+      chainId: 81457,
+      accounts: [`0x${process.env.DEPLOYER_PRIVATE_KEY1}`]
     }
   },
   etherscan: {
-    apiKey: {
-      ropsten: process.env.ETHERSCAN_API_KEY,
-      rinkeby: process.env.ETHERSCAN_API_KEY,
-      bscTestnet: process.env.BSCSCAN_API_KEY,
-      bsc: process.env.BSCSCAN_API_KEY,
-      polygonMumbai: process.env.POLYGONSCAN_API_KEY
-    }
-  }
+    apiKey: process.env.POLYGONSCAN_API_KEY,
+  },
 };

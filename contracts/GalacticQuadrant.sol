@@ -2,14 +2,18 @@
 pragma solidity 0.8.4;
 
 import "@openzeppelin/contracts/utils/Context.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./BEP20TokenWhitelisted.sol";
 
-contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
+contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControlEnumerable {
     using SafeMath for uint256;
+    using SafeERC20 for IERC20;
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
+    bytes32 public constant EMERGENCY_WITHDRAW_ROLE = keccak256("EMERGENCY_WITHDRAW_ROLE");
 
     uint256 private immutable _cap;
 
@@ -65,8 +69,9 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
     constructor(address multiSigWalletAddress) BEP20TokenWhitelisted("Galactic Quadrant", "GQ") {
         _grantRole(DEFAULT_ADMIN_ROLE, multiSigWalletAddress);
         _grantRole(MINTER_ROLE, multiSigWalletAddress);
+        _grantRole(EMERGENCY_WITHDRAW_ROLE, multiSigWalletAddress);
         _cap = 10000000000 * 10**decimals();
-        _mint(msg.sender, 1000000000 * 10**decimals());
+        //_mint(msg.sender, 1000000000 * 10**decimals());
     }
 
     /**
@@ -106,6 +111,17 @@ contract GalacticQuadrant is BEP20TokenWhitelisted, AccessControl {
         super.transferFrom(sender, recipient, amount);
         _moveDelegates(_delegates[sender], _delegates[recipient], amount);
         return true;
+    }
+
+    /**
+     * @notice Withdraws a token funds from the contract 
+     * @param token The token to withdraw
+     * @param to The address to send the funds
+     */
+    function emergencyWithdraw(address token, address to) external onlyRole(EMERGENCY_WITHDRAW_ROLE) {
+        uint256 balance = IERC20(token).balanceOf(address(this));
+        require(balance > 0, "No tokens to withdraw");
+        IERC20(token).safeTransfer(to, balance);
     }
 
     /**
